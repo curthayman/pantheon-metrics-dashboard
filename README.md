@@ -23,7 +23,7 @@ Created by Curt Hayman, CEH.
 - **You must be authenticated with Terminus** (`terminus auth:login`)
 - The script must be run on your local machine or a server where you can install Terminus and Python packages (it will not work on Streamlit Cloud or other platforms that do not allow custom CLI tools).
 
-______________________________________________________________________
+---
 
 ## 🛠️ Installation
 
@@ -42,7 +42,7 @@ ______________________________________________________________________
 
 4. **Authenticate with Terminus:**
    terminus auth:login
-______________________________________________________________________
+---
 
 ## ▶️ Usage
 
