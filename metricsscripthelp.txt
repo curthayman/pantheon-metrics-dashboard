@@ -1,0 +1,138 @@
+# Help document content
+HELP_DOCUMENT = """Terminus Metrics Script - Help Document
+=======================================
+
+Overview
+--------
+This Python script automates the process of fetching performance metrics for a specified site and environment using the 'terminus env:metrics' command. It allows users to input parameters like site name, environment name, and time period, reformats dates in the output, provides a detailed summary with a Cache Hit Ratio breakdown, and offers the option to save the results as an HTML report.
+
+Key Features:
+- Prompts for user input (site name, environment name, and period: day/week/month).
+- Reformats dates in the output from YYYY-MM-DD to DD-MM-YYYY.
+- Parses and summarizes Cache Hit Ratio data with performance insights.
+- Displays a progress bar during command execution.
+- Optionally saves output to a user-specified HTML file with a terminal-like appearance.
+
+Prerequisites
+-------------
+To run this script, ensure you have the following:
+
+1. **Python 3.x**: The script is written in Python and requires version 3.x to execute.
+   - Check your Python version with: `python3 --version` or `python --version`.
+   - Download Python from https://www.python.org/downloads/ if not installed.
+
+2. **Terminus CLI**: The script relies on the 'terminus' command-line tool to fetch metrics.
+   - Ensure 'terminus' is installed and accessible in your terminal.
+   - Installation instructions: Refer to Pantheon documentation at https://pantheon.io/docs/terminus/install.
+   - Verify installation with: `terminus --version`.
+
+3. **Required Python Packages**:
+   - `tqdm`: For displaying a progress bar during command execution.
+   - Install it using pip: `pip3 install tqdm` or `pip install tqdm`.
+   - No other external packages are required beyond Python's standard library (`subprocess`, `time`, `re`, `datetime`, `html`).
+
+System Requirements:
+- Operating System: Compatible with Windows, macOS, or Linux (any OS where Python and Terminus CLI can run).
+- Permissions: Ensure you have appropriate permissions to run Terminus commands and write files (for HTML output) in the directory where the script is executed.
+
+Installation
+------------
+1. **Install Dependencies**:
+   - If not already installed, run `pip3 install tqdm` to get the progress bar library.
+   - Ensure Terminus CLI is installed and configured with necessary credentials or API tokens.
+
+2. **Verify Setup**:
+   - Test Terminus with a simple command like `terminus site:list` to confirm it works.
+   - Run `python3 metrics.py` (or `python metrics.py`) to check if the script starts and prompts for input.
+
+Usage Instructions
+------------------
+1. **Running the Script**:
+   - Open a terminal or command prompt.
+   - Navigate to the directory containing the script.
+   - Execute with: `python3 metrics.py` (or `python metrics.py` depending on your setup).
+
+2. **Input Prompts**:
+   - **Site Name**: Enter the name of the site you want to fetch metrics for (e.g., `my-site`).
+   - **Environment Name**: Enter the environment (e.g., `live`, `dev`).
+   - **Period**: Specify the time range for metrics (`day`, `week`, or `month`). Input is case-insensitive.
+   - **HTML Output Option**: Choose if you want to save the output to an HTML file (`yes` or `no`). If `yes`, provide a filename (e.g., `report.html`).
+
+3. **Output**:
+   - The script runs the `terminus env:metrics` command and displays the reformatted output in the terminal.
+   - It provides a summary of findings and a Cache Hit Ratio breakdown with performance notes.
+   - Debug information is shown if Cache Hit Ratio data extraction fails.
+   - If HTML output is selected, the results are saved to the specified file with a terminal-like appearance.
+
+4. **Viewing Help**:
+   - Run the script with a help flag to get a brief help breakdown `python3 metrics.py --help` or `python3 metrics.py -h`.
+
+Troubleshooting
+---------------
+- **Terminus Command Fails**: Ensure Terminus is installed and authenticated. Check error messages in the output for clues.
+- **Python Errors**: Verify Python and `tqdm` are installed. Use `pip3 show tqdm` to confirm.
+- **HTML File Not Saving**: Check if you have write permissions in the directory and if the filename is valid (e.g., no illegal characters).
+- **Cache Hit Ratio Extraction Fails**: If debug info indicates a format mismatch, contact me and I can do some digging around. You can find the debugging information after you run the script.
+
+Additional Notes
+----------------
+- The script assumes the `terminus env:metrics` output is in a table format with columns like `Period` and `Cache Hit Ratio`. If the format changes, parsing may fail.
+- HTML output mimics terminal formatting using a monospaced font and structured sections.
+- For further customization (e.g., different thresholds for Cache Hit Ratio analysis), edit the script directly.
+
+Contact
+-------
+For additional support or feature requests, reach out to the script author or referntheon’s documentation at https://pantheon.io/docs/terminus/install.
+   - Verify installation with: `terminus --version`.
+
+3. **Required Python Packages**:
+   - `tqdm`: Used for displaying a progress bar during command execution.
+   - Install it via pip if not already present: `pip3 install tqdm` or `pip install tqdm`.
+
+System Requirements:
+- Operating System: Compatible with Windows, macOS, or Linux (where Python and Terminus can run).
+- Permissions: Ensure you have appropriate permissions to run Terminus commands and write files (for HTML output) in the directory where the script is executed.
+
+Installation
+------------
+1. Save the script as a `.py` file (e.g., `terminus_metrics.py`) in a directory of your choice.
+2. Ensure Python 3.x is installed (see Prerequisites).
+3. Install the `tqdm` package if not already installed:
+   - Run: `pip3 install tqdm` or `pip install tqdm`.
+4. Verify Terminus CLI is installed and configured with necessary credentials or tokens to access your sites.
+
+Usage Instructions
+------------------
+1. **Run the Script**:
+   - Open a terminal or command prompt.
+   - Navigate to the directory containing the script.
+   - Execute the script with: `python3 terminus_metrics.py` or `python terminus_metrics.py`.
+
+2. **Input Prompts**:
+   - Enter the site name (e.g., `my-site`).
+   - Enter the environment name (e.g., `live` or `dev`).
+   - Enter the period for metrics (day, week, or month). Input is case-insensitive.
+   - Choose whether to save output to an HTML file (yes/no). If yes, provide a filename (e.g., `report.html`).
+
+3. **Output**:
+   - The script runs the `terminus env:metrics` command and displays the reformatted output in the terminal.
+   - It provides a summary of findings and a Cache Hit Ratio breakdown with performance notes.
+   - If HTML output is selected, a file is created with a terminal-like formatted report titled "Terminus Metrics Report for <site_name>".
+
+4. **Debug Information**:
+   - If Cache Hit Ratio data cannot be extracted, debug info is printed to help diagnose table format issues in the Terminus output.
+
+Troubleshooting
+---------------
+- **Terminus Command Fails**: Ensure Terminus is installed and authenticated. Test with a manual command like `terminus env:metrics my-site.live --period day`.
+- **Python Errors**: Verify Python 3.x and `tqdm` are installed. Reinstall dependencies if needed.
+- **HTML File Not Saving**: Check write permissions in the directory and ensure the filename is valid (e.g., no illegal characters).
+- **Cache Data Not Extracted**: If debug info indicates a format mismatch, note the table structure in the Terminus output and adjust the script’s `extract_cache_hit_ratios` function if necessary.
+
+Additional Notes
+----------------
+- The script assumes the Terminus output format is a table with columns like "Period" and "Cache Hit Ratio". If the format changes, parsing logic may need updates.
+- For support or modifications, Let me know, or if you want to add some things, be my guest! Open Source!
+
+=======================================
+End of Help Document

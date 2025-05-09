@@ -8,6 +8,24 @@ import plotly.graph_objects as go
 
 st.set_page_config(page_title="Terminus Metrics Dashboard", layout="wide")
 
+# Sidebar Help & Documentation
+with st.sidebar:
+    st.header("Help & Documentation")
+    st.markdown("""
+    **How to Use:**
+    1. Enter your Pantheon site name and environment (e.g., `mysite` and `dev`).
+    2. Select the period for metrics (day, week, or month).
+    3. Click "Get Metrics" to fetch and analyze data.
+
+    **What is this?**
+    This dashboard uses the [Terminus CLI](https://pantheon.io/docs/terminus) to fetch site metrics from Pantheon and visualize them.
+
+    **Troubleshooting:**
+    - Ensure the Terminus CLI is installed and authenticated.
+    - If you see parsing errors, check the raw output for unexpected formatting.
+    - For more help, visit the [Pantheon Terminus Docs](https://pantheon.io/docs/terminus).
+    """)
+
 st.markdown("""
 # Terminus Metrics Analyzer
 Created by Curt Hayman, CEH
@@ -64,7 +82,8 @@ def extract_cache_hit_ratios(df):
     return list(zip(df["Period"], df["Cache Hit Ratio"]))
 
 if submitted and site_name and env_name and period:
-    st.info("Running Terminus command. Please wait...")
+    status_placeholder = st.empty()
+    status_placeholder.info("Running Terminus command. Please wait...")
     datapoints = "auto"
     format = "table"
     fields = "Period,Visits,Pages Served,Cache Hits,Cache Misses,Cache Hit Ratio"
@@ -87,6 +106,8 @@ if submitted and site_name and env_name and period:
     try:
         result = subprocess.run(command, capture_output=True, text=True)
         progress.progress(1.0)
+        status_placeholder.success("Script finished loading.")
+
         reformatted_output = reformat_date_in_output(result.stdout)
         st.subheader("Metrics Table (Raw Output)")
         st.code(reformatted_output, language="text")
@@ -165,4 +186,5 @@ if submitted and site_name and env_name and period:
         st.text(cache_breakdown_text)
 
     except Exception as e:
+        status_placeholder.empty()
         st.error(f"An error occurred: {str(e)}")
