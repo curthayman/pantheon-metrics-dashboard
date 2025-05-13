@@ -62,7 +62,7 @@ Created by Curt Hayman, CEH.
    If you get authentication errors, run terminus auth:login in your terminal.
 
 ## 🙋‍♂️ Questions or Issues?
-   Open an issue or contact Curt Hayman.
+   Open an issue or contact Me!
 
 ## 🏆 Credits
    Created by Curt Hayman, CEH.
