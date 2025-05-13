@@ -66,8 +66,8 @@ Created by Curt Hayman, CEH.
 
 ## 🏆 Credits
    Created by Curt Hayman, CEH.
-   Terminus
-   Streamlit
-   pandas
-   plotly
+   - Terminus
+   - Streamlit
+   - pandas
+   - plotly
 
