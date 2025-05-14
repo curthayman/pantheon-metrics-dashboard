@@ -5,6 +5,13 @@ Created by Curt Hayman, CEH.
 
 ---
 
+# Coming Soon!
+
+- Slack Notifications when there is a dramatic change in visiters from week to week
+- Adding Slack Notifications to Parsed Metrics Data and Raw Metrics Data
+- Added PHP Version and current user logged in under Session Info.
+---
+
 ## 🚀 What does this do?
 
 - Runs the `terminus env:metrics` command for your Pantheon site and environment.
