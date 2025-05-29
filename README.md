@@ -1,8 +1,6 @@
 # Pantheon Metrics Dashboard
 
 A **Streamlit dashboard** for visualizing Pantheon site metrics using the [Terminus CLI](https://pantheon.io/docs/terminus).  
-Created by Curt Hayman, CEH.
-
 ---
 
 ## 🚀 What does this do?
