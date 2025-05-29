@@ -1,15 +1,6 @@
 # Pantheon Metrics Dashboard
 
 A **Streamlit dashboard** for visualizing Pantheon site metrics using the [Terminus CLI](https://pantheon.io/docs/terminus).  
-Created by Curt Hayman, CEH.
-
----
-
-# Coming Soon!
-
-- Slack Notifications when there is a dramatic change in visiters from week to week
-- Adding Slack Notifications to Parsed Metrics Data and Raw Metrics Data
-- Added PHP Version and current user logged in under Session Info.
 ---
 
 ## 🚀 What does this do?
@@ -35,28 +26,34 @@ Created by Curt Hayman, CEH.
 ## 🛠️ Installation
 
 1. **Clone this repository:**
+```bash
    git clone https://github.com/curthayman/pantheon-metrics-dashboard.git
-   
+```
+```bash   
    cd pantheon-metrics-dashboard
-
+```
 
 2. **Install Python dependencies:**
+   ```bash
    pip install -r requirements.txt
+   ```
 
-
-3. **Install Terminus CLI:**
+4. **Install Terminus CLI:**
    https://docs.pantheon.io/terminus/install
 
 
-4. **Authenticate with Terminus:**
-   terminus auth:login
+5. **Authenticate with Terminus:**
+```bash   
+terminus auth:login
+```
 ---
 
 ## ▶️ Usage
 
 1. **Run the dashboard:**
+```bash
    streamlit run metrics_dashboard.py
-
+```
 2. **In your browser:**
    Enter your Pantheon site name and environment (e.g., mysite and live)
    Select the period (day, week, or month)
