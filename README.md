@@ -66,6 +66,7 @@ terminus auth:login
    The dashboard calls the Terminus CLI under the hood, so it must be available in your system PATH.
    This dashboard cannot run on Streamlit Cloud or similar platforms, because they do not allow installing or running custom CLI tools      like Terminus.
    If you get authentication errors, run terminus auth:login in your terminal.
+   You can also change line 15 from - SLACK_CHANNEL = "#pantheonmetricsalerts" to whatever you want to name your CHANNEL
 
 ## 🙋‍♂️ Questions or Issues?
    Open an issue or contact Me!
