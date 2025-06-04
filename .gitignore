@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+.env
+.venv/
+venv/
+ENV/
+env/
+*.egg-info/
+
+# macOS
+.DS_Store
+
+# JetBrains IDEs (PyCharm, etc.)
+.idea/
+
+# VSCode
+.vscode/
+
+# Custom project folders/files
+metricsmonitoring/
+
+# Other
+*.log
