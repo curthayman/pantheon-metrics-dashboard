@@ -8,6 +8,7 @@ import plotly.graph_objects as go
 import requests
 import os
 from dotenv import load_dotenv
+import json
 
 # Load environment variables from .env file
 load_dotenv()
@@ -20,6 +21,69 @@ status_top = st.empty()  # Placeholder for top-of-page status messages
 for key in ['df', 'reformatted_output', 'site_name', 'env_name', 'period']:
     if key not in st.session_state:
         st.session_state[key] = None
+
+@st.cache_data(ttl=300)
+def get_pantheon_sites():
+    try:
+        result = subprocess.run(
+            ["terminus", "site:list", "--format=json"],
+            capture_output=True, text=True, check=True
+        )
+        sites_json = result.stdout.strip()
+        try:
+            data = json.loads(sites_json)
+        except Exception as e:
+            st.error(f"Could not parse site list as JSON. Raw output:\n{sites_json}")
+            return []
+        if isinstance(data, dict):
+            sites = []
+            for site in data.values():
+                name = site.get("name", "")
+                label = site.get("label", "") or name  # Use name if label is missing
+                if name:
+                    display = f"{label} ({name})" if label != name else name
+                    sites.append((display, name))
+            return sorted(sites, key=lambda x: x[0].lower())
+        else:
+            st.error(f"Unexpected data format from Terminus. Raw output:\n{sites_json}")
+            return []
+    except subprocess.CalledProcessError as e:
+        st.error(f"Error fetching Pantheon sites: {e.stderr or e}")
+        return []
+    except Exception as e:
+        st.error(f"Error fetching Pantheon sites: {e}")
+        return []
+
+@st.cache_data(ttl=300)
+def get_pantheon_envs(site_name):
+    if not site_name:
+        return []
+    try:
+        result = subprocess.run(
+            ["terminus", "env:list", site_name, "--format=json"],
+            capture_output=True, text=True, check=True
+        )
+        envs_json = result.stdout.strip()
+        try:
+            data = json.loads(envs_json)
+        except Exception as e:
+            st.error(f"Could not parse environment list as JSON. Raw output:\n{envs_json}")
+            return []
+        if isinstance(data, dict):
+            envs = []
+            for env_name, env_info in data.items():
+                label = env_info.get("name", env_name)
+                envs.append((label, env_name))
+            return sorted(envs, key=lambda x: x[0].lower())
+        else:
+            st.error(f"Unexpected data format from Terminus. Raw output:\n{envs_json}")
+            return []
+    except subprocess.CalledProcessError as e:
+        st.error(f"Error fetching Pantheon environments: {e.stderr or e}")
+        return []
+    except Exception as e:
+        st.error(f"Error fetching Pantheon environments: {e}")
+        return []
 
 def send_slack_notification(message):
     if not SLACK_WEBHOOK_URL or "hooks.slack.com/services/" not in SLACK_WEBHOOK_URL:
@@ -61,15 +125,28 @@ st.markdown("""
 This dashboard fetches and analyzes Pantheon site metrics using the Terminus CLI.
 """)
 
-with st.form("metrics_form"):
+# --- Site selection form with dropdown ---
+site_list = get_pantheon_sites()
+if site_list:
+    site_display_names = [display for display, name in site_list]
+    site_name_map = {display: name for display, name in site_list}
+    selected_display = st.selectbox("Select your Pantheon site", site_display_names)
+    site_name = site_name_map[selected_display]
+else:
     site_name = st.text_input("Enter the site name")
-    env_name = st.text_input("Enter the environment name")
-    period = st.selectbox("Select the period", ["day", "week", "month"])
-    submitted = st.form_submit_button("Get Metrics")
 
-if site_name and env_name:
-    st.session_state['site_name'] = site_name
-    st.session_state['env_name'] = env_name
+# Fetch environments for the selected site
+env_list = get_pantheon_envs(site_name) if site_name else []
+if env_list:
+    env_display_names = [display for display, name in env_list]
+    env_name_map = {display: name for display, name in env_list}
+    selected_env_display = st.selectbox("Select the environment", env_display_names)
+    env_name = env_name_map[selected_env_display]
+else:
+    env_name = st.text_input("Enter the environment name")
+
+period = st.selectbox("Select the period", ["day", "week", "month"])
+submitted = st.button("Get Metrics")
 
 with st.sidebar:
     st.header("Help & Documentation")
