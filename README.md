@@ -9,6 +9,7 @@ A **Streamlit dashboard** for visualizing Pantheon site metrics using the [Termi
 - Parses and displays the results in a beautiful, interactive dashboard.
 - Shows charts, a cache efficiency gauge, and a summary.
 - Lets you export the parsed data as CSV.
+- Sends a Slack Alert to your Slack Channel of your choosing with anomolies, and Low Cache Efficiency warnings.
 
 ---
 
@@ -17,6 +18,7 @@ A **Streamlit dashboard** for visualizing Pantheon site metrics using the [Termi
 - **Python 3.7+**
 - **Terminus CLI** installed and accessible in your system PATH  
   [Install Terminus](https://pantheon.io/docs/terminus/install)
+- [Slack Web Hook](https://api.slack.com/messaging/webhooks), I have attached the **.env.example** file where you put your Slack Webhook, just rename the file to **.env**  
 - **Pantheon account** with access to the site you want to monitor
 - **You must be authenticated with Terminus** (`terminus auth:login`)
 - The script must be run on your local machine or a server where you can install Terminus and Python packages (it will not work on Streamlit Cloud or other platforms that do not allow custom CLI tools).
@@ -64,6 +66,7 @@ terminus auth:login
    The dashboard calls the Terminus CLI under the hood, so it must be available in your system PATH.
    This dashboard cannot run on Streamlit Cloud or similar platforms, because they do not allow installing or running custom CLI tools      like Terminus.
    If you get authentication errors, run terminus auth:login in your terminal.
+   You can also change line 15 from - SLACK_CHANNEL = "#pantheonmetricsalerts" to whatever you want to name your CHANNEL
 
 ## 🙋‍♂️ Questions or Issues?
    Open an issue or contact Me!
