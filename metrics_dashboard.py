@@ -152,7 +152,7 @@ with st.sidebar:
     st.header("Help & Documentation")
     st.markdown("""
     **How to Use:**
-    1. Enter your Pantheon site name and environment (e.g., `sitename` and `dev`).
+    1. Select your Pantheon site name and environment from the dropdown (e.g., `sitename` and `dev`).
     2. Select the period for metrics (day, week, or month).
     3. Click "Get Metrics" to fetch and analyze data.
 
